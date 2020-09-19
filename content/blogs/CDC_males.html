@@ -17,7 +17,7 @@ title: CDC@USA
 <h2>Replicating a chart</h2>
 <p>For the 1st challenge, we try to replicate a publication-ready plot using <code>dplyr</code> and <code>ggplot2</code>. The data we used is “CDC_Males.csv”.</p>
 <pre class="r"><code># Data loading
-cdc &lt;- vroom::vroom(here::here(&quot;data&quot;,&quot;CDC_Males.csv&quot;))</code></pre>
+cdc &lt;- vroom::vroom(&quot;/Users/dl/Documents/MAM/individual_portfolio/data/CDC_Males.csv&quot;)</code></pre>
 <pre class="r"><code>#Creating dataframe we need for graph
 cdc_edited&lt;-cdc%&gt;%
   #filter according to specific values of columns, note != means &quot;not equal to&quot;
