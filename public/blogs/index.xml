@@ -22,9 +22,9 @@
     </item>
     
     <item>
-      <title>Session 2: Homework 1</title>
+      <title>Mask Acceptance</title>
       <link>/blogs/cdc_males/</link>
-      <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 19 Sep 2020 22:42:51 -0500</pubDate>
       
       <guid>/blogs/cdc_males/</guid>
       <description>knitr::opts_chunk$set( message = FALSE, warning = FALSE, tidy=FALSE, # display code as typed size=&amp;quot;small&amp;quot;) # slightly smaller font for code options(digits = 3) # default figure size knitr::opts_chunk$set( fig.width=6.75, fig.height=6.75, fig.align = &amp;quot;center&amp;quot; ) Challenge 1: Replicating a chart For the 1st challenge, we try to replicate a publication-ready plot using dplyr and ggplot2. Open the journal article “Riddell_Annals_Hom-Sui-Disparities.pdf”. Read the abstract and have a look at Figure 3. The data we used is “CDC_Males.</description>
