@@ -22,12 +22,13 @@
     </item>
     
     <item>
-      <title>Mask Acceptance</title>
+      <title>Relationship between suicide and homicides of white people</title>
       <link>/blogs/cdc_males/</link>
       <pubDate>Sat, 19 Sep 2020 22:42:51 -0500</pubDate>
       
       <guid>/blogs/cdc_males/</guid>
-      <description>knitr::opts_chunk$set( message = FALSE, warning = FALSE, tidy=FALSE, # display code as typed size=&amp;quot;small&amp;quot;) # slightly smaller font for code options(digits = 3) # default figure size knitr::opts_chunk$set( fig.width=6.75, fig.height=6.75, fig.align = &amp;quot;center&amp;quot; ) Challenge 1: Replicating a chart For the 1st challenge, we try to replicate a publication-ready plot using dplyr and ggplot2. Open the journal article “Riddell_Annals_Hom-Sui-Disparities.pdf”. Read the abstract and have a look at Figure 3. The data we used is “CDC_Males.</description>
+      <description>Replicating a chart For the 1st challenge, we try to replicate a publication-ready plot using dplyr and ggplot2. Open the journal article “Riddell_Annals_Hom-Sui-Disparities.pdf”. Read the abstract and have a look at Figure 3. The data we used is “CDC_Males.csv”.
+#Creating dataframe we need for graph cdc_edited&amp;lt;-cdc%&amp;gt;% #filter according to specific values of columns, note != means &amp;quot;not equal to&amp;quot; filter(type.fac==&amp;quot;Firearm-related&amp;quot;)%&amp;gt;% filter(gun.house.prev.category!=&amp;quot;NA&amp;quot;)%&amp;gt;% #mutating new columns for x-axis and y-axis values mutate(suicide=100000*Deaths.</description>
     </item>
     
     <item>
