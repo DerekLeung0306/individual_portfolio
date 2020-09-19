@@ -119,44 +119,44 @@ glimpse(nyt_mask_survey)</code></pre>
 # The id field is the FIPS code for the county
 county_map %&gt;% 
   sample_n(5)</code></pre>
-<pre><code>##       long      lat  order  hole piece            group    id
-## 1 -1866090  -511787  28598 FALSE     1 0500000US06095.1 06095
-## 2  1679299 -1118932  44992 FALSE     1 0500000US13245.1 13245
-## 3 -1826641  -175616  28479 FALSE     1 0500000US06093.1 06093
-## 4   704065  -123843 190184 FALSE     1 0500000US55123.1 55123
-## 5  1845938  -591536 169982 FALSE     1 0500000US51011.1 51011</code></pre>
+<pre><code>##      long      lat  order  hole piece            group    id
+## 1 1201315  -253185  90358 FALSE     1 0500000US26149.1 26149
+## 2 1607556 -1305527  45856 FALSE     1 0500000US13271.1 13271
+## 3 1068587 -1483764  96938 FALSE     1 0500000US28039.1 28039
+## 4 2032139   -51893 120691 FALSE     1 0500000US36105.1 36105
+## 5 2011179   113682 118837 FALSE     1 0500000US36035.1 36035</code></pre>
 <pre class="r"><code>county_data %&gt;%
     sample_n(5)</code></pre>
-<pre><code>##      id             name state census_region      pop_dens   pop_dens4
-## 1 18085 Kosciusko County    IN       Midwest [  100,  500) [118,71672]
-## 2 20189   Stevens County    KS       Midwest [    0,   10) [  0,   17)
-## 3 08005  Arapahoe County    CO          West [  500, 1000) [118,71672]
-## 4 55075 Marinette County    WI       Midwest [   10,   50) [ 17,   45)
-## 5 47039   Decatur County    TN         South [   10,   50) [ 17,   45)
-##     pop_dens6   pct_black    pop female white black travel_time land_area
-## 1 [ 82,  215) [ 0.0, 2.0)  78564   50.2  96.3   1.0        20.9       531
-## 2 [  0,    9) [ 0.0, 2.0)   5801   50.0  96.0   0.7        23.4       727
-## 3 [215,71672] [10.0,15.0) 618821   50.8  78.8  10.8        26.9       798
-## 4 [ 25,   45) [ 0.0, 2.0)  41298   50.0  97.2   0.4        20.3      1399
-## 5 [ 25,   45) [ 2.0, 5.0)  11666   50.8  94.8   3.1        26.8       334
+<pre><code>##      id              name state census_region      pop_dens   pop_dens4
+## 1 27127    Redwood County    MN       Midwest [   10,   50) [ 17,   45)
+## 2 28099    Neshoba County    MS         South [   50,  100) [ 45,  118)
+## 3 01019   Cherokee County    AL         South [   10,   50) [ 45,  118)
+## 4 29161     Phelps County    MO       Midwest [   50,  100) [ 45,  118)
+## 5 17189 Washington County    IL       Midwest [   10,   50) [ 17,   45)
+##     pop_dens6   pct_black   pop female white black travel_time land_area
+## 1 [  9,   25) [ 0.0, 2.0) 15515   50.3  89.5   0.7        17.0       879
+## 2 [ 45,   82) [15.0,25.0) 29465   52.3  60.3  21.2        24.4       570
+## 3 [ 45,   82) [ 2.0, 5.0) 26037   50.4  93.2   4.5        26.9       554
+## 4 [ 45,   82) [ 2.0, 5.0) 44847   47.6  91.2   2.5        19.2       672
+## 5 [ 25,   45) [ 0.0, 2.0) 14337   49.8  97.8   0.8        24.0       563
 ##   hh_income su_gun4 su_gun6  fips votes_dem_2016 votes_gop_2016
-## 1     50859 [ 5, 8) [ 7, 8) 18085           6311          23909
-## 2     54494 [11,54] [10,12) 20189            215           1564
-## 3     60651 [ 5, 8) [ 7, 8)  8005         148365         109638
-## 4     40490 [11,54] [10,12) 55075           6243          12995
-## 5     36258 [11,54] [10,12) 47039            894           3580
+## 1     47447 [ 5, 8) [ 4, 7) 27127           1887           5137
+## 2     37050 [ 8,11) [10,12) 28099           2668           7613
+## 3     34907 [11,54] [12,54]  1019           1524           8809
+## 4     41964 [ 8,11) [ 8,10) 29161           4761          12699
+## 5     52832 [ 5, 8) [ 7, 8) 17189           1446           5566
 ##   total_votes_2016 per_dem_2016 per_gop_2016 diff_2016 per_dem_2012
-## 1            31907        0.198        0.749     17598        0.228
-## 2             1853        0.116        0.844      1349        0.121
-## 3           281658        0.527        0.389     38727        0.532
-## 4            19979        0.312        0.650      6752        0.476
-## 5             4577        0.195        0.782      2686        0.306
-##   per_gop_2012 diff_2012  winner partywinner16 winner12 partywinner12 flipped
-## 1        0.751     15691   Trump    Republican   Romney    Republican      No
-## 2        0.863      1483   Trump    Republican   Romney    Republican      No
-## 3        0.448     21201 Clinton      Democrat    Obama      Democrat      No
-## 4        0.512       741   Trump    Republican   Romney    Republican      No
-## 5        0.676      1571   Trump    Republican   Romney    Republican      No</code></pre>
+## 1             7566        0.249        0.679      3250        0.388
+## 2            10438        0.256        0.729      4945        0.278
+## 3            10503        0.145        0.839      7285        0.218
+## 4            18499        0.257        0.686      7938        0.319
+## 5             7376        0.196        0.755      4120        0.331
+##   per_gop_2012 diff_2012 winner partywinner16 winner12 partywinner12 flipped
+## 1        0.589      1562  Trump    Republican   Romney    Republican      No
+## 2        0.714      4742  Trump    Republican   Romney    Republican      No
+## 3        0.768      5368  Trump    Republican   Romney    Republican      No
+## 4        0.654      6095  Trump    Republican   Romney    Republican      No
+## 5        0.647      2339  Trump    Republican   Romney    Republican      No</code></pre>
 <pre class="r"><code>glimpse(county_data)</code></pre>
 <pre><code>## Rows: 3,195
 ## Columns: 32
@@ -260,7 +260,7 @@ p1</code></pre>
 </div>
 <div id="checking-for-relationships" class="section level2">
 <h2>Checking for relationships</h2>
-<p>Does mask use acceptance have any relation with some demographics? Let us explor the relationship between country household income, population, and % who voted republican in 2016</p>
+<p>Does mask use acceptance have any relation with some demographics? Let us explore the relationship between country household income, population, and % who voted republican in 2016</p>
 <pre class="r"><code>county_masks_full %&gt;% 
   select(hh_income, pop, per_gop_2016, delta) %&gt;% 
   GGally::ggpairs()+

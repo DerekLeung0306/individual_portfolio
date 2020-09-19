@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="MAM2021 || Data enthusiast">
+	<meta name="author" content="Derek Leung">
+	<meta name="generator" content="Hugo 0.74.3" />
+	<title>CDC@USA &middot; Derek Leung&#39;s Portfolio</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Derek Leung</strong> <span>IP</span></a>
+        <nav>
+            <a href="#menu"></a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+                <li><a href="/blogs">Blogs</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="/blogs" class="button special fit">My Projects</a></li>
+            
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>CDC@USA</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/blogs/pic08.jpg" alt="" /></span>
+                            
+                            
+
+
+<div id="replicating-a-chart" class="section level2">
+<h2>Replicating a chart</h2>
+<p>For the 1st challenge, we try to replicate a publication-ready plot using <code>dplyr</code> and <code>ggplot2</code>. The data we used is “CDC_Males.csv”.</p>
+<pre class="r"><code># Data loading
+cdc &lt;- vroom::vroom(&quot;/Users/dl/Documents/MAM/individual_portfolio/data/CDC_Males.csv&quot;)</code></pre>
+<pre class="r"><code>#Creating dataframe we need for graph
+cdc_edited&lt;-cdc%&gt;%
+  #filter according to specific values of columns, note != means &quot;not equal to&quot;
+  filter(type.fac==&quot;Firearm-related&quot;)%&gt;%
+  filter(gun.house.prev.category!=&quot;NA&quot;)%&gt;%
+  #mutating new columns for x-axis and y-axis values
+  mutate(suicide=100000*Deaths.suicide.White*adjusted.suicide.White/crude.suicide.White/Population.White,
+         homicide=100000*Deaths.homicide.White*adjusted.homicide.White/crude.homicide.White/Population.White)
+
+#vector for specifying max/min values of y the graph should show
+ylim&lt;-range(cdc_edited$homicide)
+ylim[2]&lt;-4.791
+
+#plot the graph, setting up x-, y-axis and labels of data point
+ggplot(cdc_edited,aes(x=suicide,y=homicide,label=ST))+
+  #scatterplot specifying size and colour of point to two extra features
+  #in order to make a black circle outside each dot, we set colour to be the same as fill, then specify colour &quot;black&quot; outside of aesthetics
+  geom_point(aes(size=average.pop.white,colour=gun.house.prev.category,fill=gun.house.prev.category),shape=21,colour=&#39;black&#39;,stroke=0.6)+
+  #change colour scheme for fill feature
+  scale_fill_brewer(palette=&#39;OrRd&#39;,name=&quot;Gun Ownership&quot;)+
+  labs(x=&quot;White suicide rate (per 100,000 per year)&quot;,
+       y=&quot;White homicide rate (per 100,000 per year)&quot;)+
+  theme_bw()+
+  #guide_legend to switch the order of the two legends, override_aes is to override main commands
+  guides(fill=guide_legend(order=1,override.aes=list(size=5)),
+         size=guide_legend(order=2))+
+  #changing breaking points of size feature
+  scale_size(range = c(0, 15), name=&quot;White Population&quot;, breaks=c(500000,1500000,3000000,7000000),labels=c(&quot;500k&quot;,&quot;1.5m&quot;,&quot;3m&quot;,&quot;7m&quot;))+
+  #we use geom_text_repel here instead of geom_text, or else the labels will cover the point
+  geom_text_repel()+
+  #fix y-limits
+  coord_cartesian(ylim=ylim)+
+  #annotating stats at bottom
+  annotate(&quot;text&quot;,x=25,y=0.75,label=&quot;Spearman&#39;s Rho: 0.74&quot;)</code></pre>
+<p><img src="/blogs/CDC_males_files/figure-html/ihatechallenge-1.png" width="748.8" style="display: block; margin: auto;" /></p>
+</div>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="#ZgotmplZ" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/derekleung0306" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; London Business School</li>
+                
+                <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>
