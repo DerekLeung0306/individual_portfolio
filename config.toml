@@ -1,7 +1,7 @@
 # Site settings
-baseURL = "https://best-mathematician-in-the-world-is-grothendieck.netlify.app/"
+baseURL = "https://derek-leung-portfolio.netlify.app/"
 languageCode = "en-us"
-title = "Portfolio website for Derek Leung"
+title = "Derek Leung's Portfolio"
 theme = "forty"
 
 # Enter your tracking code to enable Google Analytics
@@ -98,10 +98,10 @@ disqusShortname = ""
       url = "blogs/blog5"
 
     [[params.tiles.showcase]]
-      title = "Tempus"
-      subtitle = "Feugiat Amet Tempus"
+      title = "Chart imitation"
+      subtitle = "CDC@USA: Suicide vs Homicide"
       image = "pic02.jpg"
-      url = "blogs/tempus"
+      url = "blogs/CDC_males"
 
     [[params.tiles.showcase]]
       title = "Magna"
