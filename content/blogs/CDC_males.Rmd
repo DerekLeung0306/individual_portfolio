@@ -1,0 +1,93 @@
+---
+categories:
+- ""
+- ""
+date: "2020-09-19"
+description: Relationship between suicide and homicides of white people
+draft: false
+image: pic08.jpg
+keywords: ""
+slug: CDC_males
+title: CDC@USA
+---
+
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(here)
+library(skimr)
+library(janitor)
+library(vroom)
+library(ggrepel)
+```
+
+
+
+## Replicating a chart
+
+For the 1st challenge, we try to replicate a publication-ready plot using `dplyr` and `ggplot2`. The data we used is "CDC_Males.csv".
+
+
+```{r}
+# Data loading
+cdc <- vroom::vroom(here::here("data","CDC_Males.csv"))
+```
+
+
+
+```{r ihatechallenge, fig.height=5.7, fig.width=7.8}
+#Creating dataframe we need for graph
+cdc_edited<-cdc%>%
+  #filter according to specific values of columns, note != means "not equal to"
+  filter(type.fac=="Firearm-related")%>%
+  filter(gun.house.prev.category!="NA")%>%
+  #mutating new columns for x-axis and y-axis values
+  mutate(suicide=100000*Deaths.suicide.White*adjusted.suicide.White/crude.suicide.White/Population.White,
+         homicide=100000*Deaths.homicide.White*adjusted.homicide.White/crude.homicide.White/Population.White)
+
+#vector for specifying max/min values of y the graph should show
+ylim<-range(cdc_edited$homicide)
+ylim[2]<-4.791
+
+#plot the graph, setting up x-, y-axis and labels of data point
+ggplot(cdc_edited,aes(x=suicide,y=homicide,label=ST))+
+  #scatterplot specifying size and colour of point to two extra features
+  #in order to make a black circle outside each dot, we set colour to be the same as fill, then specify colour "black" outside of aesthetics
+  geom_point(aes(size=average.pop.white,colour=gun.house.prev.category,fill=gun.house.prev.category),shape=21,colour='black',stroke=0.6)+
+  #change colour scheme for fill feature
+  scale_fill_brewer(palette='OrRd',name="Gun Ownership")+
+  labs(x="White suicide rate (per 100,000 per year)",
+       y="White homicide rate (per 100,000 per year)")+
+  theme_bw()+
+  #guide_legend to switch the order of the two legends, override_aes is to override main commands
+  guides(fill=guide_legend(order=1,override.aes=list(size=5)),
+         size=guide_legend(order=2))+
+  #changing breaking points of size feature
+  scale_size(range = c(0, 15), name="White Population", breaks=c(500000,1500000,3000000,7000000),labels=c("500k","1.5m","3m","7m"))+
+  #we use geom_text_repel here instead of geom_text, or else the labels will cover the point
+  geom_text_repel()+
+  #fix y-limits
+  coord_cartesian(ylim=ylim)+
+  #annotating stats at bottom
+  annotate("text",x=25,y=0.75,label="Spearman's Rho: 0.74")
+```
