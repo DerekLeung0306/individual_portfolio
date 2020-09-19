@@ -50,12 +50,12 @@ For the 1st challenge, we try to replicate a publication-ready plot using `dplyr
 
 ```{r}
 # Data loading
-cdc <- vroom::vroom(here::here("data","CDC_Males.csv"))
+cdc <- vroom::vroom("/Users/dl/Documents/MAM/individual_portfolio/data/CDC_Males.csv")
 ```
 
 
 
-```{r ihatechallenge, fig.height=5.7, fig.width=7.8}
+```{r ihatechallenge, fig.height=5.7, fig.width=7.8, cache=TRUE}
 #Creating dataframe we need for graph
 cdc_edited<-cdc%>%
   #filter according to specific values of columns, note != means "not equal to"
