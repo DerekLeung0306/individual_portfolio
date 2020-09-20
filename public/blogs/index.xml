@@ -22,13 +22,34 @@
     </item>
     
     <item>
+      <title>IMDB ratings</title>
+      <link>/blogs/imdb/</link>
+      <pubDate>Sun, 20 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/imdb/</guid>
+      <description>IMDB ratings: Differences between directors Recall the IMDB ratings data. I would like to explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not.
+I now load the data and examine its structure.
+movies &amp;lt;- read_csv(&amp;quot;/Users/dl/Documents/MAM/individual_portfolio/data/movies.csv&amp;quot;) glimpse(movies) ## Rows: 2,961 ## Columns: 11 ## $ title &amp;lt;chr&amp;gt; &amp;quot;Avatar&amp;quot;, &amp;quot;Titanic&amp;quot;, &amp;quot;Jurassic World&amp;quot;, &amp;quot;The Aveng… ## $ genre &amp;lt;chr&amp;gt; &amp;quot;Action&amp;quot;, &amp;quot;Drama&amp;quot;, &amp;quot;Action&amp;quot;, &amp;quot;Action&amp;quot;, &amp;quot;Action&amp;quot;, … ## $ director &amp;lt;chr&amp;gt; &amp;quot;James Cameron&amp;quot;, &amp;quot;James Cameron&amp;quot;, &amp;quot;Colin Trevorro… ## $ year &amp;lt;dbl&amp;gt; 2009, 1997, 2015, 2012, 2008, 1999, 1977, 2015, 2… ## $ duration &amp;lt;dbl&amp;gt; 178, 194, 124, 173, 152, 136, 125, 141, 164, 93, … ## $ gross &amp;lt;dbl&amp;gt; 7.</description>
+    </item>
+    
+    <item>
+      <title>Youth Risk Behavior Surveillance</title>
+      <link>/blogs/yrbss/</link>
+      <pubDate>Sun, 20 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/yrbss/</guid>
+      <description>Youth Risk Behavior Surveillance Every two years, the Centers for Disease Control and Prevention conduct the Youth Risk Behavior Surveillance System (YRBSS) survey, where it takes data from high schoolers (9th through 12th grade), to analyze health patterns. We will try to work with a selected group of variables from a random sample of observations during one of the years the YRBSS was conducted.
+Load the data This data is part of the openintro textbook and we can load and inspect it.</description>
+    </item>
+    
+    <item>
       <title>CDC@COVID19</title>
       <link>/blogs/cdc_covid/</link>
       <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>/blogs/cdc_covid/</guid>
       <description>CDC COVID-19 Public Use Data Let us revisit the CDC Covid-19 Case Surveillance Data. There are well over 3 million entries of individual, de-identified patient data. Since this is a large file, I used vroom to load it and kept cache=TRUE in the chunk options.
-# URL link to CDC to download data url &amp;lt;- &amp;quot;https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD&amp;quot; covid_data &amp;lt;- vroom(url)%&amp;gt;% clean_names() ## Rows: 3,662,325 ## Columns: 11 ## Delimiter: &amp;quot;,&amp;quot; ## chr [8]: current_status, sex, age_group, Race and ethnicity (combined), hosp_yn, icu_yn.</description>
+# URL link to CDC to download data url &amp;lt;- &amp;quot;https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD&amp;quot; covid_data &amp;lt;- vroom(url)%&amp;gt;% clean_names() Our first investigation is on co-morbidities. Let us clean the dataset a bit by deleting rows with Missing/Unknown in our desired columns.</description>
     </item>
     
     <item>

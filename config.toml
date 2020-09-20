@@ -104,7 +104,7 @@ disqusShortname = ""
 
     [[params.tiles.showcase]]
       title = "CDC@Covid"
-      subtitle = "Investigation on effect of \nvarious factors on COVID death rate"
+      subtitle = "Investigation on effect of various factors on COVID death rate"
       image = "pic03.jpg"
       url = "blogs/CDC_covid"
 

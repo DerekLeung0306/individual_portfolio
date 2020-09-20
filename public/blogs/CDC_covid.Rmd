@@ -11,6 +11,22 @@ slug: CDC_covid
 title: CDC@COVID19
 ---
 
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
 # CDC COVID-19 Public Use Data
 
 Let us revisit the [CDC Covid-19 Case Surveillance Data](https://data.cdc.gov/Case-Surveillance/COVID-19-Case-Surveillance-Public-Use-Data/vbim-akqf). There are well over 3 million entries of individual, de-identified patient data. Since this is a large file, I used `vroom` to load it and kept `cache=TRUE` in the chunk options.
@@ -60,7 +76,7 @@ covid_data_deathrate1 %>%
 
 Then, we would like to shift the focus to admittance to ICU. Similarly, we should first clean the dataset, just that instead of co-morbidities, we have to filter and mutate in accordance to admittance to ICU.
 
-```{r covid_challenge_2, echo=FALSE, out.width="100%"}
+```{r covid_challenge_2, echo=FALSE, warning=FALSE, out.width="100%"}
 covid_data_deathrate2 <- covid_data %>% 
   filter(!(death_yn %in%c("Missing","Unknown")),
          !(icu_yn %in%c("Missing","Unknown")),

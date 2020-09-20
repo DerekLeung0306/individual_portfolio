@@ -87,14 +87,6 @@ url &lt;- &quot;https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOW
 
 covid_data &lt;- vroom(url)%&gt;%
   clean_names()</code></pre>
-<pre><code>## Rows: 3,662,325
-## Columns: 11
-## Delimiter: &quot;,&quot;
-## chr  [8]: current_status, sex, age_group, Race and ethnicity (combined), hosp_yn, icu_yn...
-## date [3]: cdc_report_dt, pos_spec_dt, onset_dt
-## 
-## Use `spec()` to retrieve the guessed column specification
-## Pass a specification to the `col_types` argument to quiet this message</code></pre>
 <p>Our first investigation is on co-morbidities. Let us clean the dataset a bit by deleting rows with Missing/Unknown in our desired columns. Then we could calculate death rate of people with/without co-morbidities according to their age.</p>
 <pre class="r"><code>covid_data_deathrate1 &lt;- covid_data %&gt;% 
   filter(!(death_yn %in%c(&quot;Missing&quot;,&quot;Unknown&quot;)),
@@ -108,13 +100,9 @@ covid_data &lt;- vroom(url)%&gt;%
   count(death_yn)  %&gt;%
   group_by (age_group, sex, medcond_yn) %&gt;%
   mutate(death_rate = n*100/sum(n)) %&gt;% 
-  filter(death_yn==&quot;Yes&quot;) %&gt;% mutate(comorb = ifelse(medcond_yn==&quot;No&quot;,&quot;Without Comorbidities&quot;,&quot;With Comorbidities&quot;), death_rate = round(death_rate,1))</code></pre>
-<pre><code>## Warning: `count_()` is deprecated as of dplyr 0.7.0.
-## Please use `count()` instead.
-## See vignette(&#39;programming&#39;) for more help
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
-<pre class="r"><code>covid_data_deathrate1</code></pre>
+  filter(death_yn==&quot;Yes&quot;) %&gt;% mutate(comorb = ifelse(medcond_yn==&quot;No&quot;,&quot;Without Comorbidities&quot;,&quot;With Comorbidities&quot;), death_rate = round(death_rate,1))
+
+covid_data_deathrate1</code></pre>
 <pre><code>## # A tibble: 36 x 7
 ## # Groups:   age_group, sex, medcond_yn [36]
 ##    age_group     sex    medcond_yn death_yn     n death_rate comorb             
@@ -137,7 +125,7 @@ covid_data &lt;- vroom(url)%&gt;%
   theme(axis.text.x = element_text(angle = 30)) +geom_text(aes(label=death_rate), position=position_dodge(width=0.9),hjust = -0.25)  + theme_bw()+
     labs(title=&quot;Covid death % by age group, sex and presence of co-morbidities&quot;,
        x=&quot;&quot;,y=&quot;&quot;, caption=&quot;Source:CDC&quot;)</code></pre>
-<p><img src="/blogs/CDC_covid_files/figure-html/covid_plot_1-1.png" width="672" /></p>
+<p><img src="/blogs/CDC_covid_files/figure-html/covid_plot_1-1.png" width="648" style="display: block; margin: auto;" /></p>
 <p>Then, we would like to shift the focus to admittance to ICU. Similarly, we should first clean the dataset, just that instead of co-morbidities, we have to filter and mutate in accordance to admittance to ICU.</p>
 <pre class="r"><code>covid_data_deathrate2 %&gt;%  
   ggplot(aes(x= age_group, y = death_rate))+
@@ -145,7 +133,7 @@ covid_data &lt;- vroom(url)%&gt;%
   theme(axis.text.x = element_text(angle = 30)) +geom_text(aes(label=death_rate), position=position_dodge(width=0.9),hjust = -0.25)+ ggtitle(&quot;Covid death % by age group, sex and whether patient was admitted to ICU&quot;)+ theme_bw()+
   labs(title=&quot;Covid death % by age group, sex and whether patient was admitted to ICU&quot;,
        x=&quot;&quot;,y=&quot;&quot;, caption=&quot;Source:CDC&quot;)</code></pre>
-<p><img src="/blogs/CDC_covid_files/figure-html/covid_plot_2-1.png" width="672" /></p>
+<p><img src="/blogs/CDC_covid_files/figure-html/covid_plot_2-1.png" width="648" style="display: block; margin: auto;" /></p>
 <p>Besides the graphs, make sure your code is easy to read and understand– imagine if you revisit this six months from now. you should be able to follow what you were doing!</p>
 </div>
 
