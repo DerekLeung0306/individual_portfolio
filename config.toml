@@ -103,22 +103,22 @@ disqusShortname = ""
       url = "blogs/CDC_males"
 
     [[params.tiles.showcase]]
-      title = "Magna"
-      subtitle = "Lorem Etiam Nullam"
+      title = "CDC@Covid"
+      subtitle = "Investigation on effect of \nvarious factors on COVID death rate"
       image = "pic03.jpg"
-      url = "blogs/magna"
+      url = "blogs/CDC_covid"
 
     [[params.tiles.showcase]]
-      title = "Ipsum"
-      subtitle = "Nisl Sed Aliquam"
+      title = "IMDB"
+      subtitle = "Comparing directors' average ratings using `infer` package"
       image = "pic04.jpg"
-      url = "blogs/ipsum"
+      url = "blogs/imdb"
       
     [[params.tiles.showcase]]
-      title = "Ipsum"
-      subtitle = "Nisl Sed Aliquam"
-      image = "pic04.jpg"
-      url = "blogs/ipsum"
+      title = "Youth Risk Behavior Surveillance"
+      subtitle = " Introducing standard workflow of hypothesis testing in R by Youth Risk Data"
+      image = "pic07.jpg"
+      url = "blogs/yrbss"
     # You can make more showcases by copy and pasting the code above
 
   [params.blog]
@@ -131,14 +131,14 @@ disqusShortname = ""
   # Section Type Two
   [params.two]
     enable = true
-    title = "Massa libero"
-    subtitle = """Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. 
-    Mauris aliquet magna magna sed nunc rhoncus pharetra. 
-    Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. 
-    Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero.
-    Mauris aliquet magna magna sed nunc rhoncus amet pharetra et feugiat tempus."""
-    buttonText = "Get Started"
-    url = "blogs"
+    title = "Me outside coding"
+    subtitle = """ 
+    [The Mockingbird (Mosing)](https://www.mockingbirdmosing.com)
+    
+    Math idol: [Martin Hairer](www.hairer.org)
+    """
+    #buttonText = "Get Started"
+    #url = "blogs"
 
 
   # Contact section

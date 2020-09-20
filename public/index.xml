@@ -22,6 +22,16 @@
     </item>
     
     <item>
+      <title>CDC@COVID19</title>
+      <link>/blogs/cdc_covid/</link>
+      <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/cdc_covid/</guid>
+      <description>CDC COVID-19 Public Use Data Let us revisit the CDC Covid-19 Case Surveillance Data. There are well over 3 million entries of individual, de-identified patient data. Since this is a large file, I used vroom to load it and kept cache=TRUE in the chunk options.
+# URL link to CDC to download data url &amp;lt;- &amp;quot;https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD&amp;quot; covid_data &amp;lt;- vroom(url)%&amp;gt;% clean_names() ## Rows: 3,662,325 ## Columns: 11 ## Delimiter: &amp;quot;,&amp;quot; ## chr [8]: current_status, sex, age_group, Race and ethnicity (combined), hosp_yn, icu_yn.</description>
+    </item>
+    
+    <item>
       <title>CDC@USA</title>
       <link>/blogs/cdc_males/</link>
       <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>

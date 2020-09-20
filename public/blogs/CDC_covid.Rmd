@@ -1,0 +1,91 @@
+---
+categories:
+- ""
+- ""
+date: "2020-09-19"
+description: What contributes to death of COVID-19 patients?
+draft: false
+image: pic09.jpg
+keywords: ""
+slug: CDC_covid
+title: CDC@COVID19
+---
+
+# CDC COVID-19 Public Use Data
+
+Let us revisit the [CDC Covid-19 Case Surveillance Data](https://data.cdc.gov/Case-Surveillance/COVID-19-Case-Surveillance-Public-Use-Data/vbim-akqf). There are well over 3 million entries of individual, de-identified patient data. Since this is a large file, I used `vroom` to load it and kept `cache=TRUE` in the chunk options.
+
+
+```{r, cache=TRUE}
+# URL link to CDC to download data
+url <- "https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD"
+
+covid_data <- vroom(url)%>%
+  clean_names()
+
+
+```
+
+Our first investigation is on co-morbidities. Let us clean the dataset a bit by deleting rows with Missing/Unknown in our desired columns. Then we could calculate death rate of people with/without co-morbidities according to their age.
+```{r covid_challenge_1}
+covid_data_deathrate1 <- covid_data %>% 
+  filter(!(death_yn %in%c("Missing","Unknown")),
+         !(medcond_yn %in%c("Missing","Unknown")),
+         !(is.na(age_group)), 
+         !(age_group %in%c("Missing","Unknown")),
+         !(is.na(sex)), 
+         !(sex %in%c("Missing","Unknown"))) %>% 
+  
+ group_by (age_group, sex, medcond_yn, death_yn) %>%
+  count(death_yn)  %>%
+  group_by (age_group, sex, medcond_yn) %>%
+  mutate(death_rate = n*100/sum(n)) %>% 
+  filter(death_yn=="Yes") %>% mutate(comorb = ifelse(medcond_yn=="No","Without Comorbidities","With Comorbidities"), death_rate = round(death_rate,1))
+
+covid_data_deathrate1
+```
+
+Now it's time to plot!
+
+```{r covid_plot_1}
+covid_data_deathrate1 %>%  
+  ggplot(aes(x= age_group, y = death_rate))+
+  geom_col(fill="#8b9dc3")+coord_flip()+facet_grid(col=vars(sex),row=vars(comorb))+
+  theme(axis.text.x = element_text(angle = 30)) +geom_text(aes(label=death_rate), position=position_dodge(width=0.9),hjust = -0.25)  + theme_bw()+
+    labs(title="Covid death % by age group, sex and presence of co-morbidities",
+       x="",y="", caption="Source:CDC")
+```
+
+
+
+Then, we would like to shift the focus to admittance to ICU. Similarly, we should first clean the dataset, just that instead of co-morbidities, we have to filter and mutate in accordance to admittance to ICU.
+
+```{r covid_challenge_2, echo=FALSE, out.width="100%"}
+covid_data_deathrate2 <- covid_data %>% 
+  filter(!(death_yn %in%c("Missing","Unknown")),
+         !(icu_yn %in%c("Missing","Unknown")),
+         !(is.na(age_group)), 
+         !(age_group %in%c("Missing","Unknown")),
+         !(is.na(sex)), 
+         !(sex %in%c("Missing","Unknown"))) %>% 
+  
+ group_by (age_group, sex, icu_yn, death_yn) %>%
+  count(death_yn)  %>%
+  group_by (age_group, sex, icu_yn) %>%
+  mutate(death_rate = n*100/sum(n)) %>% 
+  filter(death_yn=="Yes") %>% mutate(ICU = ifelse(icu_yn=="Yes","Admitted to ICU","No ICU"), death_rate = round(death_rate,1))
+```
+
+```{r  covid_plot_2}
+covid_data_deathrate2 %>%  
+  ggplot(aes(x= age_group, y = death_rate))+
+  geom_col(fill="#ff9966")+coord_flip()+facet_grid(col=vars(sex),row=vars(ICU))+
+  theme(axis.text.x = element_text(angle = 30)) +geom_text(aes(label=death_rate), position=position_dodge(width=0.9),hjust = -0.25)+ ggtitle("Covid death % by age group, sex and whether patient was admitted to ICU")+ theme_bw()+
+  labs(title="Covid death % by age group, sex and whether patient was admitted to ICU",
+       x="",y="", caption="Source:CDC")
+
+```
+
+
+Besides the graphs, make sure your code is easy to read and understand-- imagine if you revisit this six months from now. you should be able to follow what you were doing!
+

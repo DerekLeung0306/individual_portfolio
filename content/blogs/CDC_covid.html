@@ -1,0 +1,72 @@
+---
+categories:
+- ""
+- ""
+date: "2020-09-19"
+description: What contributes to death of COVID-19 patients?
+draft: false
+image: pic09.jpg
+keywords: ""
+slug: CDC_covid
+title: CDC@COVID19
+---
+
+
+
+<div id="cdc-covid-19-public-use-data" class="section level1">
+<h1>CDC COVID-19 Public Use Data</h1>
+<p>Let us revisit the <a href="https://data.cdc.gov/Case-Surveillance/COVID-19-Case-Surveillance-Public-Use-Data/vbim-akqf">CDC Covid-19 Case Surveillance Data</a>. There are well over 3 million entries of individual, de-identified patient data. Since this is a large file, I used <code>vroom</code> to load it and kept <code>cache=TRUE</code> in the chunk options.</p>
+<pre class="r"><code># URL link to CDC to download data
+url &lt;- &quot;https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD&quot;
+
+covid_data &lt;- vroom(url)%&gt;%
+  clean_names()</code></pre>
+<p>Our first investigation is on co-morbidities. Let us clean the dataset a bit by deleting rows with Missing/Unknown in our desired columns. Then we could calculate death rate of people with/without co-morbidities according to their age.</p>
+<pre class="r"><code>covid_data_deathrate1 &lt;- covid_data %&gt;% 
+  filter(!(death_yn %in%c(&quot;Missing&quot;,&quot;Unknown&quot;)),
+         !(medcond_yn %in%c(&quot;Missing&quot;,&quot;Unknown&quot;)),
+         !(is.na(age_group)), 
+         !(age_group %in%c(&quot;Missing&quot;,&quot;Unknown&quot;)),
+         !(is.na(sex)), 
+         !(sex %in%c(&quot;Missing&quot;,&quot;Unknown&quot;))) %&gt;% 
+  
+ group_by (age_group, sex, medcond_yn, death_yn) %&gt;%
+  count(death_yn)  %&gt;%
+  group_by (age_group, sex, medcond_yn) %&gt;%
+  mutate(death_rate = n*100/sum(n)) %&gt;% 
+  filter(death_yn==&quot;Yes&quot;) %&gt;% mutate(comorb = ifelse(medcond_yn==&quot;No&quot;,&quot;Without Comorbidities&quot;,&quot;With Comorbidities&quot;), death_rate = round(death_rate,1))
+
+covid_data_deathrate1</code></pre>
+<pre><code>## # A tibble: 36 x 7
+## # Groups:   age_group, sex, medcond_yn [36]
+##    age_group     sex    medcond_yn death_yn     n death_rate comorb             
+##    &lt;chr&gt;         &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;    &lt;int&gt;      &lt;dbl&gt; &lt;chr&gt;              
+##  1 0 - 9 Years   Female No         Yes          4        0.1 Without Comorbidit…
+##  2 0 - 9 Years   Female Yes        Yes          6        0.3 With Comorbidities 
+##  3 0 - 9 Years   Male   No         Yes          4        0.1 Without Comorbidit…
+##  4 0 - 9 Years   Male   Yes        Yes          5        0.2 With Comorbidities 
+##  5 10 - 19 Years Female No         Yes          1        0   Without Comorbidit…
+##  6 10 - 19 Years Female Yes        Yes         13        0.2 With Comorbidities 
+##  7 10 - 19 Years Male   No         Yes          3        0   Without Comorbidit…
+##  8 10 - 19 Years Male   Yes        Yes         16        0.3 With Comorbidities 
+##  9 20 - 29 Years Female No         Yes          5        0   Without Comorbidit…
+## 10 20 - 29 Years Female Yes        Yes         72        0.4 With Comorbidities 
+## # … with 26 more rows</code></pre>
+<p>Now it’s time to plot!</p>
+<pre class="r"><code>covid_data_deathrate1 %&gt;%  
+  ggplot(aes(x= age_group, y = death_rate))+
+  geom_col(fill=&quot;#8b9dc3&quot;)+coord_flip()+facet_grid(col=vars(sex),row=vars(comorb))+
+  theme(axis.text.x = element_text(angle = 30)) +geom_text(aes(label=death_rate), position=position_dodge(width=0.9),hjust = -0.25)  + theme_bw()+
+    labs(title=&quot;Covid death % by age group, sex and presence of co-morbidities&quot;,
+       x=&quot;&quot;,y=&quot;&quot;, caption=&quot;Source:CDC&quot;)</code></pre>
+<p><img src="/blogs/CDC_covid_files/figure-html/covid_plot_1-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>Then, we would like to shift the focus to admittance to ICU. Similarly, we should first clean the dataset, just that instead of co-morbidities, we have to filter and mutate in accordance to admittance to ICU.</p>
+<pre class="r"><code>covid_data_deathrate2 %&gt;%  
+  ggplot(aes(x= age_group, y = death_rate))+
+  geom_col(fill=&quot;#ff9966&quot;)+coord_flip()+facet_grid(col=vars(sex),row=vars(ICU))+
+  theme(axis.text.x = element_text(angle = 30)) +geom_text(aes(label=death_rate), position=position_dodge(width=0.9),hjust = -0.25)+ ggtitle(&quot;Covid death % by age group, sex and whether patient was admitted to ICU&quot;)+ theme_bw()+
+  labs(title=&quot;Covid death % by age group, sex and whether patient was admitted to ICU&quot;,
+       x=&quot;&quot;,y=&quot;&quot;, caption=&quot;Source:CDC&quot;)</code></pre>
+<p><img src="/blogs/CDC_covid_files/figure-html/covid_plot_2-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>Besides the graphs, make sure your code is easy to read and understand– imagine if you revisit this six months from now. you should be able to follow what you were doing!</p>
+</div>
