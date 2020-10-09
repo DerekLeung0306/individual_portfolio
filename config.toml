@@ -91,10 +91,10 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "NYT Masks"
-      subtitle = "How does mask use acceptance vary in the US?"
+      title = "Case Study -- The Lending Club"
+      subtitle = "What are the major factors on deciding interest rate?"
       image = "pic07.jpg"
-      url = "blogs/blog5"
+      url = "blogs/lendingclub"
 
     [[params.tiles.showcase]]
       title = "CDC@USA"
