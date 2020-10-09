@@ -6,10 +6,21 @@
     <description>Recent content on Derek Leung&#39;s Portfolio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Sep 2020 22:42:51 -0500</lastBuildDate>
+    <lastBuildDate>Thu, 08 Oct 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Case Study -- The Lending Club</title>
+      <link>/blogs/lendingclub/</link>
+      <pubDate>Thu, 08 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/lendingclub/</guid>
+      <description>Load and prepare the data We start by loading the data to R in a dataframe.
+lc_raw &amp;lt;- read_csv(&amp;quot;/Users/dl/Documents/MAM/individual_portfolio/data/LendingClub Data.csv&amp;quot;, skip=1) %&amp;gt;% clean_names() # use janitor::clean_names()  ICE the data: Inspect, Clean, Explore Any data science engagement starts with ICE. Inspect, Clean and Explore the data.
+glimpse(lc_raw)  ## Rows: 42,538 ## Columns: 80 ## $ int_rate &amp;lt;dbl&amp;gt; 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0… ## $ loan_amnt &amp;lt;dbl&amp;gt; 8000, 6000, 6500, 8000, 5500, 6000, 10200, 15000,… ## $ term_months &amp;lt;dbl&amp;gt; 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 3… ## $ installment &amp;lt;dbl&amp;gt; 241.</description>
+    </item>
     
     <item>
       <title>Mask Acceptance</title>
