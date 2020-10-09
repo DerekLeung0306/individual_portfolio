@@ -21,7 +21,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse) # the usual stuff: dplyr, readr, and other goodies
 library(lubridate) # to handle dates
 library(GGally) # for correlation-scatterplot matrix
-library(car) # vif() function to check for multicolinearity
 library(ggfortify) # to produce residual diagnostic plots
 library(rsample) # to split dataframe in training- & testing sets
 library(here) # to read files and organise data
@@ -44,7 +43,7 @@ The workshop consists of 10 questions plus an optional question. Submit one repo
 We start by loading the data to R in a dataframe.
 ```{r, load_data, warning=FALSE, message=FALSE}
 
-lc_raw <- read_csv("LendingClub Data.csv",  skip=1) %>%  clean_names() # use janitor::clean_names()
+lc_raw <- read_csv("/Users/dl/Documents/MAM/individual_portfolio/data/LendingClub Data.csv",  skip=1) %>%  clean_names() # use janitor::clean_names()
 ```
 
 # ICE the data: Inspect, Clean, Explore
@@ -502,7 +501,7 @@ Instead, perhaps it's better to find the reasons as to why different periods are
 
 ```{r, bond yields}
 #load the data to memory as a dataframe
-bond_prices<-readr::read_csv("MonthBondYields.csv")
+bond_prices<-readr::read_csv("/Users/dl/Documents/MAM/individual_portfolio/data/MonthBondYields.csv")
 
 #make the date of the bond file comparable to the lending club dataset
 #for some regional date/number (locale) settings this may not work. If it does try running the following line of code in the Console
@@ -566,26 +565,3 @@ summary(model_wild_west)
 0.009452*1.96
 ```
 
-## Q11. (optional) Use other publicly available datasets to further improve performance (e.g., quarterly data on US inflation or [CPI](https://fred.stlouisfed.org/series/CPALTT01USQ657N)). Explain why you think the additional data will make a difference and check if it does.{-}
-
->Changes in CPI should correlate to changes in inflation, therefore such a variable can better explain behaviour of interest rates in the market as behaviour of inlfation partially explaines the behaviour of loan takers and actions of investors/government.
-
-```{r}
-CPI_df <- read_csv("CPALTT01USM657N.csv") %>%  clean_names() # use janitor::clean_names()
-
-glimpse(CPI_df)
-lc_with_CPI<-lc_with_bonds %>%
-  left_join(CPI_df, by = c("issue_d" = "date")) %>%
-  arrange(issue_d)
-
-glimpse(lc_with_CPI)
-model_wild_west2 <- train(
-    int_rate ~loan_amnt*grade+ term+ dti + poly(Price, 3)*grade+cpaltt01usm657n*grade , #fill your variables here 
-    lc_with_CPI,
-   method = "lm",
-    trControl = control
-   )
-summary(model_wild_west2)
-
-
-```
